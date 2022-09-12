@@ -21,8 +21,7 @@ use Illuminate\Validation\ValidationException;
 */
 
 
-Route::get('level/two/show/{id}', [LevelTwoController::class, 'show']);
-Route::get('carts', [CartController::class, 'index']);
+
 
 Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
 
@@ -31,6 +30,7 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     });
 
 
+    Route::get('level/two/show/{id}', [LevelTwoController::class, 'show']);
     Route::get('carts', [CartController::class, 'index']);
 
 
