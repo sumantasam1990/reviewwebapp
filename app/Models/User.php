@@ -3,11 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use App\Models\Cart;
+use App\Models\SaveCart;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -42,4 +44,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function save_cart_many_single()
+    {
+        return $this->belongsToMany(Cart::class)->withPivot('type', 'created_at')->wherePivot('type', '=', 'single');
+    }
+
+    public function save_cart_many_multi()
+    {
+        return $this->belongsToMany(Cart::class)->withPivot('type', 'created_at')->wherePivot('type', '=', 'multi');
+    }
 }

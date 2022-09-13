@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LevelOne;
+use App\Models\Cart;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class LevelOneController extends Controller
+class SaveCartController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +16,11 @@ class LevelOneController extends Controller
      */
     public function index()
     {
-        $level_ones = LevelOne::select('one_title as title', 'id as oneId')->get();
+        $carts = User::with('save_cart_many_single.product_categories.products.product_image')
+            ->where('id', auth()->user()->id)
+            ->get();
 
-        return response()->json(['level_ones' => $level_ones], 200);
+        return response()->json(['carts' => $carts], 200);
     }
 
     /**
@@ -43,10 +47,10 @@ class LevelOneController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\LevelOne  $levelOne
+     * @param  \App\Models\SaveCart  $saveCart
      * @return \Illuminate\Http\Response
      */
-    public function show(LevelOne $levelOne)
+    public function show()
     {
         //
     }
@@ -54,10 +58,10 @@ class LevelOneController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\LevelOne  $levelOne
+     * @param  \App\Models\SaveCart  $saveCart
      * @return \Illuminate\Http\Response
      */
-    public function edit(LevelOne $levelOne)
+    public function edit()
     {
         //
     }
@@ -66,10 +70,10 @@ class LevelOneController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\LevelOne  $levelOne
+     * @param  \App\Models\SaveCart  $saveCart
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LevelOne $levelOne)
+    public function update(Request $request)
     {
         //
     }
@@ -77,10 +81,10 @@ class LevelOneController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\LevelOne  $levelOne
+     * @param  \App\Models\SaveCart  $saveCart
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LevelOne $levelOne)
+    public function destroy()
     {
         //
     }

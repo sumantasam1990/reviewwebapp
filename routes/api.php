@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\LevelOneController;
 use App\Http\Controllers\LevelTwoController;
 use App\Http\Controllers\PassportAuthController;
+use App\Http\Controllers\SaveCartController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -30,7 +32,15 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     });
 
 
+    // levels
+    Route::get('level/one/show', [LevelOneController::class, 'index']);
     Route::get('level/two/show/{id}', [LevelTwoController::class, 'show']);
+
+    //carts
+    Route::get('carts/show/{id}', [CartController::class, 'show']);
+    Route::get('user/save/carts/', [SaveCartController::class, 'index']);
+
+
     Route::get('carts', [CartController::class, 'index']);
 
 
