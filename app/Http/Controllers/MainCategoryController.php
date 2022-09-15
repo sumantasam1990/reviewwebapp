@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use App\Models\MainCategory;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class MainCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $mainCategories = MainCategory::select('id as cateId', 'title')->get();
+
+        return response()->json(['categories' => $mainCategories], 200);
     }
 
     /**
@@ -41,23 +43,21 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\MainCategory  $mainCategory
      * @return \Illuminate\Http\Response
      */
-    public function show(int $id)
+    public function show(MainCategory $mainCategory)
     {
-        $products = Product::with('product_image')->where('product_category_id', $id)->paginate(20);
-
-        return response()->json(['products' => $products], 200);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\MainCategory  $mainCategory
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(MainCategory $mainCategory)
     {
         //
     }
@@ -66,10 +66,10 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\MainCategory  $mainCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, MainCategory $mainCategory)
     {
         //
     }
@@ -77,10 +77,10 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\MainCategory  $mainCategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(MainCategory $mainCategory)
     {
         //
     }

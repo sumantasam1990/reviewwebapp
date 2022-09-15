@@ -10,10 +10,23 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class User extends Authenticatable
+class User extends Authenticatable implements Searchable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
+
+    public function getSearchResult(): SearchResult
+     {
+        $url = $this->id;
+
+         return new \Spatie\Searchable\SearchResult(
+            $this,
+            $this->name,
+            $url
+         );
+    }
 
     /**
      * The attributes that are mass assignable.

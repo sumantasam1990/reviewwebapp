@@ -3,8 +3,12 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\LevelOneController;
 use App\Http\Controllers\LevelTwoController;
+use App\Http\Controllers\MainCategoryController;
 use App\Http\Controllers\PassportAuthController;
+use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SaveCartController;
+use App\Http\Controllers\SearchController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -32,16 +36,25 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     });
 
 
+    // main categories
+    Route::get('main/categories', [MainCategoryController::class, 'index']);
+
     // levels
-    Route::get('level/one/show', [LevelOneController::class, 'index']);
+    Route::get('level/one/show/{id}', [LevelOneController::class, 'show']);
     Route::get('level/two/show/{id}', [LevelTwoController::class, 'show']);
 
     //carts
     Route::get('carts/show/{id}', [CartController::class, 'show']);
     Route::get('user/save/carts/', [SaveCartController::class, 'index']);
 
+    // product type / category
+    Route::get('product/type/{id}', [ProductCategoryController::class, 'show']);
 
-    Route::get('carts', [CartController::class, 'index']);
+    // product listing
+    Route::get('product/list/{id}', [ProductController::class, 'show']);
+
+    // search carts
+    Route::get('search/{term}', [SearchController::class, 'index']);
 
 
 

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProductCategory;
+use App\Models\Cart;
 use Illuminate\Http\Request;
+use App\Models\ProductCategory;
 
 class ProductCategoryController extends Controller
 {
@@ -44,9 +45,15 @@ class ProductCategoryController extends Controller
      * @param  \App\Models\ProductCategory  $productCategory
      * @return \Illuminate\Http\Response
      */
-    public function show(ProductCategory $productCategory)
+    public function show(int $id)
     {
-        //
+        $product_type = Cart::select('id', 'cart_name as cart', 'important_details as description', 'user_id')->with(['product_categories' => function ($query) {
+            $query->select('id as typeId', 'cate_name as type', 'user_id as uid', 'cart_id');
+        }, 'user' => function ($query) {
+            $query->select('id', 'name');
+        }])->withCount('cart_opens as opens')->where('id', $id)->get();
+
+        return response()->json(['cart' => $product_type], 200);
     }
 
     /**
