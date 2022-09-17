@@ -12,17 +12,17 @@ class Cart extends Model
 {
     use HasFactory;
 
-    public function product_categories()
+    public function product_categories(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(ProductCategory::class);
     }
 
-    public function level_two()
+    public function level_two(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(LevelTwo::class);
     }
 
-    public function cart_opens()
+    public function cart_opens(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(CartOpen::class);
     }
