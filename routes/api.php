@@ -42,7 +42,7 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
 
 Route::prefix('v1')->group(function () {
 
-    Route::post('register', [PassportAuthController::class, 'register']);
+    Route::post('register', [\App\Http\Controllers\PassportAuthController::class, 'register']);
 
     Route::post('/sanctum/token', function (Request $request) {
         $request->validate([
