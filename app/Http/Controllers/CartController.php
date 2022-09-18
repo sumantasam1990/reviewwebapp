@@ -14,9 +14,9 @@ class CartController extends Controller
      */
     public function index()
     {
-        $carts = Cart::with(['product_categories.products.product_image'])->get();
+        //$carts = Cart::with(['product_categories.products.product_image'])->get();
 
-        return response()->json(['carts' => $carts], 200);
+
     }
 
     /**
@@ -46,9 +46,15 @@ class CartController extends Controller
      * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function show(Cart $cart)
+    public function show(int $id)
     {
-        //
+        $carts = Cart::select('id', 'cart_name as cart', 'important_details as description', 'user_id')->with(['product_categories' => function ($query) {
+            $query->select('id as typeId', 'cate_name as type', 'user_id as uid', 'cart_id');
+        }, 'user' => function ($query) {
+            $query->select('id', 'name');
+        }])->withCount('cart_opens as opens')->where('level_two_id', $id)->get();
+
+        return response()->json(['carts' => $carts], 200);
     }
 
     /**

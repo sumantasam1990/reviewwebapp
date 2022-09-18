@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('level_ones', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
+        Schema::create('save_carts', function (Blueprint $table) {
+            $table->id();
 
-            $table->increments('id');
             $table->integer('user_id');
-            $table->integer('main_category_id');
-            $table->string('one_title');
+            $table->integer('cart_id');
+            $table->char('type', 50);
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('level_ones');
+        Schema::dropIfExists('save_carts');
     }
 };

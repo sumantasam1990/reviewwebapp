@@ -1,7 +1,14 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\LevelOneController;
 use App\Http\Controllers\LevelTwoController;
+use App\Http\Controllers\MainCategoryController;
+use App\Http\Controllers\PassportAuthController;
+use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SaveCartController;
+use App\Http\Controllers\SearchController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -29,9 +36,28 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     });
 
 
-    Route::get('level/two/show/{id}', [LevelTwoController::class, 'show']);
-    Route::get('carts', [CartController::class, 'index']);
+    // main categories
+    Route::get('main/categories', [MainCategoryController::class, 'index']);
 
+    // levels
+    Route::get('level/one/show/{id}', [LevelOneController::class, 'show']);
+    Route::get('level/two/show/{id}', [LevelTwoController::class, 'show']);
+
+    //carts
+    Route::get('carts/show/{id}', [CartController::class, 'show']);
+    Route::get('user/save/carts/', [SaveCartController::class, 'index']);
+
+    // product type / category
+    Route::get('product/type/{id}', [ProductCategoryController::class, 'show']);
+
+    // product listing
+    Route::get('product/list/{id}', [ProductController::class, 'show']);
+
+    // search carts
+    Route::get('search/{term}', [SearchController::class, 'index']);
+
+    //public profile
+    Route::get('profile/{id}', [\App\Http\Controllers\ProfileController::class, 'show']);
 
 
 
@@ -42,7 +68,7 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
 
 Route::prefix('v1')->group(function () {
 
-    Route::post('register', [\App\Http\Controllers\PassportAuthController::class, 'register']);
+    Route::post('register', [PassportAuthController::class, 'register']);
 
     Route::post('/sanctum/token', function (Request $request) {
         $request->validate([

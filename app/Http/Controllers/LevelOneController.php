@@ -14,7 +14,9 @@ class LevelOneController extends Controller
      */
     public function index()
     {
-        //
+        // $level_ones = LevelOne::select('one_title as title', 'id as oneId')->get();
+
+        // return response()->json(['level_ones' => $level_ones], 200);
     }
 
     /**
@@ -44,9 +46,11 @@ class LevelOneController extends Controller
      * @param  \App\Models\LevelOne  $levelOne
      * @return \Illuminate\Http\Response
      */
-    public function show(LevelOne $levelOne)
+    public function show(int $id)
     {
-        //
+        $level_ones = LevelOne::select('one_title as title', 'id as oneId')->where('main_category_id', $id)->get();
+
+        return response()->json(['level_ones' => $level_ones], 200);
     }
 
     /**

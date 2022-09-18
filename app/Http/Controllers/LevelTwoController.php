@@ -64,8 +64,8 @@ class LevelTwoController extends Controller
     {
         try{
 
-            $level_twos = LevelTwo::withCount('cart_opens')
-                ->orderBy('cart_opens_count', 'desc')
+            $level_twos = LevelTwo::select('two_title as title', 'id as twoId')->withCount('cart_opens as order')
+                ->orderBy('order', 'desc')
                 ->where('level_one_id', $id)
                 ->get();
 
