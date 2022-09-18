@@ -2,27 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 
-class SaveCartController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return JsonResponse
+     * @return Response
      */
-    public function index(): JsonResponse
+    public function index()
     {
-        $carts = User::with('save_cart_many_single.product_categories.products.product_image')
-            ->where('id', auth()->user()->id)
-            ->get();
-
-        return response()->json(['carts' => $carts], 200);
+        //
     }
 
     /**
@@ -32,7 +26,7 @@ class SaveCartController extends Controller
      */
     public function create()
     {
-        ////
+        //
     }
 
     /**
@@ -49,33 +43,42 @@ class SaveCartController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\SaveCart  $saveCart
-     * @return Response
+     * @param  int  $id
+     * @return JsonResponse
      */
-    public function show()
+    public function show(int $id): JsonResponse
     {
-        //
+        try {
+            $profile = User::with('carts.product_categories.products.product_image', 'save_cart_many_single', 'save_cart_many_multi')
+                ->where('id', '=', $id)
+                ->get();
+
+            return response()->json(['profile' => $profile], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['err' => $th->getMessage()], 500);
+        }
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\SaveCart  $saveCart
-     * @return Response
+     * @param int $id
+     * @return string
      */
-    public function edit()
+    public function edit(int $id): string
     {
-        //
+        return '';
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SaveCart  $saveCart
+     * @param  int  $id
      * @return Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -83,10 +86,10 @@ class SaveCartController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\SaveCart  $saveCart
+     * @param  int  $id
      * @return Response
      */
-    public function destroy()
+    public function destroy($id)
     {
         //
     }

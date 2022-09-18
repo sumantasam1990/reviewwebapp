@@ -56,6 +56,9 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     // search carts
     Route::get('search/{term}', [SearchController::class, 'index']);
 
+    //public profile
+    Route::get('profile/{id}', [\App\Http\Controllers\ProfileController::class, 'show']);
+
 
 
 
